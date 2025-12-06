@@ -1,0 +1,146 @@
+🚀 Git Notes (Beginner → Intermediate)
+📌 1. Basic Git Workflow
+git init            → Initialize a new repository
+git add .           → Stage all files
+git commit -m ""    → Create a commit
+git status          → Check changes
+git log             → View commit history
+git log --oneline   → Short log
+
+📌 2. Inspecting Commits
+View one commit
+git show <commit-id>
+
+View only file names changed
+git show --name-only <commit-id>
+
+Show reflog (all HEAD movements)
+git reflog
+
+📌 3. Branching & Switching
+git branch                → Show branches
+git branch <name>         → Create branch
+git checkout <name>       → Switch to branch
+git checkout -b <name>    → Create + switch
+
+📌 4. Merging Branches
+Merge FeatureBranch into main:
+git checkout main
+git merge FeatureBranch
+
+
+This creates a merge commit.
+
+📌 5. Working with Remote (GitHub)
+Set remote upstream on first push
+git push --set-upstream origin main
+
+Regular push/pull
+git push
+git pull
+
+Clone a repo
+git clone <url>
+
+📌 6. How git revert works (SAFE undo)
+Used to undo commits that are ALREADY pushed.
+
+It creates a new commit that reverses the changes of an older commit.
+
+Example from your workflow:
+
+You reverted the commit test commit.
+
+git revert 743a59a
+
+
+This created:
+
+Revert "test commit"
+This reverts commit 743a59a...
+
+
+✔ Original commit stays in history
+✔ A new commit removes the file
+✔ Safe for teamwork
+
+📌 7. How git reset works (DANGEROUS undo)
+Used to move HEAD to an older commit.
+Rewrites history.
+
+You used:
+
+git reset b2c80cd
+
+
+Now your history became:
+
+Initial commit → Main branch commit
+
+
+The revert and the "test commit" disappeared from your local branch.
+
+⚠ If you push after reset:
+
+git push --force
+
+
+This overwrites GitHub history — dangerous for shared repos.
+
+📌 8. Types of Reset
+1. Soft Reset (keeps staging files)
+git reset --soft <commit>
+
+2. Mixed Reset (default — keeps working directory, unstages files)
+git reset <commit>
+
+3. Hard Reset (deletes all local changes)
+git reset --hard <commit>
+
+📌 9. Git Checkout Examples (your workflow)
+Switch to branch
+git checkout FeatureBranch
+
+Go back to main
+git checkout main
+
+📌 10. Compare reset vs revert (FINAL SUMMARY)
+Feature	git reset	git revert
+Undo style	Deletes commits	Creates new opposite commit
+Safe for pushed commits?	❌ No	✔ Yes
+Rewrites history?	✔ Yes	❌ No
+Use case	Local mistakes	Team-safe undo
+📌 11. Full Example (Based on Your Work)
+Step 1 — Feature branch commits:
+Feature branch commit  
+Second feature branch commit
+
+Step 2 — Main branch commits:
+Main branch commit
+
+Step 3 — Added & pushed "testCommit.txt"
+
+Then reverted it → safe undo.
+
+Step 4 — Reset main branch
+git reset b2c80cd
+
+
+All commits after that were removed locally.
+
+Step 5 — Merged FeatureBranch into main
+git merge FeatureBranch
+
+📌 12. Important Command Meanings
+Command	Meaning
+git add	Moves files to staging area
+git reset <file>	Removes file from staging (unstages)
+git reset <commit>	Moves HEAD to older commit
+git revert <commit>	Creates commit that undoes changes
+git checkout <branch>	Switches branch
+git merge <branch>	Combines branch into current one
+git reflog	Shows every HEAD movement
+git show <commit>	Shows patch (changes) of one commit
+git show --name-only	Shows only changed filenames
+git push	Upload to GitHub
+git pull	Download & merge from GitHub
