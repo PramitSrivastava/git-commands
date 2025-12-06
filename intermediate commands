@@ -1,0 +1,233 @@
+## 1. Checking Out a Branch
+Command
+git checkout main
+
+
+What it does:
+Switches your working directory to the main branch.
+
+2. Viewing Commit History
+Command
+git log
+
+
+What you saw:
+Two commits:
+
+Main branch commit
+
+Initial commit
+
+3. Viewing What a Commit Changed
+Command
+git show <commit-id>
+
+
+Example:
+
+git show b2c80cd2fc3d078aedec4411191ba742addb4c13
+
+
+What it does:
+Shows:
+
+Commit metadata (author, date, message)
+
+The exact file changes (diff)
+
+4. Viewing Only File Names Changed in a Commit
+Command
+git show --name-only <commit-id>
+
+
+Example:
+
+git show --name-only b2c80cd2f...
+
+
+Output:
+
+newFileMain.txt
+stagedFile.txt
+unstagedFile.txt
+
+5. Understanding Why ls Failed
+
+You typed:
+
+ls
+
+
+Windows CMD doesn't support ls.
+
+Use:
+
+dir
+
+6. Switching Between Branches
+Commands
+git checkout FeatureBranch
+git checkout main
+
+
+What it does:
+Changes the branch & updates the working directory to that branch's version of files.
+
+7. Commit Comparison Between Branches
+
+You used:
+
+git log
+git show --name-only <commit-id>
+
+
+This helped you see:
+
+FeatureBranch has 2 commits
+
+main has only 2 commits
+
+Both share the Initial commit
+
+This demonstrates branch divergence.
+
+8. Viewing Branch Movement History (Super Important)
+Command
+git reflog
+
+
+What it does:
+Shows EVERY movement of HEAD, including:
+
+checkouts
+
+commits
+
+resets
+
+Even if you lose commits, reflog can recover them.
+
+Example lines:
+
+HEAD@{3}: commit: Second commit in feature branch
+HEAD@{8}: commit: Main branch commit
+HEAD@{9}: commit (initial): Initial commit
+
+9. Checking Help for git show
+Command
+git show -h
+
+
+Purpose:
+Shows available options instead of doing an operation.
+
+10. Pushing to GitHub (First Time Push of main)
+
+When you ran:
+
+git push
+
+
+You got:
+
+fatal: The current branch main has no upstream branch.
+
+
+So Git suggested the fix:
+
+git push --set-upstream origin main
+
+
+What this does:
+
+Pushes the branch to GitHub
+
+Connects local main ↔ remote origin/main
+
+Future git push works without extra flags
+
+11. Cloning the Repository Again into a New Folder
+
+You ran:
+
+git clone https://github.com/... sample123   # repo already existed
+
+
+Error:
+
+destination path already exists
+
+
+So you did:
+
+git clone https://github.com/... newRepoSitory
+
+
+This created a fresh copy of the same GitHub repo.
+
+12. Adding a New File & Committing in the New Repo
+
+Commands:
+
+echo testCommit > testCommit.txt
+git add .
+git commit -m "test commit"
+
+
+What you did here:
+Created a new commit in the freshly cloned repo.
+
+13. Pushing the New Commit
+Command
+git push
+
+
+Since the fresh repo already had upstream tracking, push succeeded.
+
+14. Pulling That Commit Into the Original Repo
+
+Back in your original folder:
+
+git pull
+
+
+This fetched the new commit and did a fast-forward merge.
+
+Output showed:
+
+Updating b2c80cd..743a59a
+Fast-forward
+ testCommit.txt | 1 +
+
+
+What happened:
+Your original repo is now up-to-date with GitHub.
+
+15. Final Log After Pull
+
+You checked:
+
+git log
+
+
+And saw:
+
+test commit (from newRepoSitory)
+
+Main branch commit
+
+Initial commit
+
+✔ Everything is synced perfectly.
+
+🎯 Quick Summary of What You Learned
+Git Concept	What you did
+Branch switching	git checkout
+Viewing commits	git log
+Viewing changes	git show & git show --name-only
+Viewing HEAD history	git reflog
+Fixing upstream branch	git push --set-upstream origin main
+Cloning twice	original + new repo copy
+Creating commits	echo, git add, git commit
+Syncing repos	git pull
+Fast-forward merge	happened when pulling
